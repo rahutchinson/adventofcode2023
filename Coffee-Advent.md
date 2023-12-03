@@ -13,7 +13,7 @@ This document is for reviewing coffees from my [Onyx Coffee Advent calendar](htt
 
 ---
 
-### Day 1: Ethiopia Hambela Bishan Fugu
+### Day 2: Ethiopia Hambela Bishan Fugu
 - **Taste:** Certainly sweet - green grape acidity is interesting 
 - **Aroma:** botanical
 - **Rating (1-5):** 2
