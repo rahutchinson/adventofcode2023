@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -66,18 +67,72 @@ func correctNumbers(winner, guess string) int {
 	return 0
 }
 
-// 59722 too high
-// 41937 too high
+func correctNumbersNoMultiply(winner, guess string) int {
+	guesses := strings.Split(strings.TrimSpace(guess), " ")
+	winners := strings.Split(strings.TrimSpace(winner), " ")
+	winners_int := makeIntList(winners)
+	guesses_int := makeIntList(guesses)
+	count := 1
+	for _, g := range winners_int {
+		if contains(guesses_int, g) {
+			count += 1
+		}
+	}
+	return count
+}
+
+func initializeCountMap(length int) map[int]int {
+	count_map := make(map[int]int)
+	for i := 1; i < length+1; i++ {
+		count_map[i] = 1
+	}
+	return count_map
+}
+
+func processCardMapWinners(w_map map[int]int) int {
+	fmt.Println(w_map)
+	fmt.Println("__________________")
+	count_map := initializeCountMap(len(w_map))
+	keys := make([]int, 0, len(w_map))
+	for key := range w_map {
+		keys = append(keys, key)
+	}
+	sort.Ints(keys)
+
+	// How many wins
+	for _, key := range keys {
+		for j := 0; j < count_map[key]; j++ {
+			if w_map[key] != 1 || key == 1 {
+				// adds the wins to the following cards
+				for i := 1; i < w_map[key]; i++ {
+					if !(key+i > len(w_map)) {
+						count_map[key+i] = count_map[key+i] + 1
+					}
+				}
+			}
+		}
+	}
+	sum := 0
+	for _, value := range count_map {
+		sum += value
+	}
+	fmt.Println(count_map)
+	return sum
+}
+
+// 10642 too low
 func main() {
 	dat, err := os.ReadFile("./inputs/day4/input.txt")
 	check(err)
 	temp := strings.Split(string(dat), "\n")
 
-	running_sum := 0
-	for _, value := range temp {
+	// running_sum := 0
+	card_map := make(map[int]int)
+	for row, value := range temp {
 		tClean := strings.Split(string(value), ":")[1]
 		tempClean := strings.Split(tClean, "|")
-		running_sum += correctNumbers(tempClean[0], tempClean[1])
+		card_map[row+1] = correctNumbersNoMultiply(tempClean[0], tempClean[1])
 	}
-	fmt.Println(running_sum)
+	fmt.Println(processCardMapWinners(card_map))
+
 }
