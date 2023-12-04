@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -12,7 +13,7 @@ func check(e error) {
 	}
 }
 
-func contains(slice []string, val string) bool {
+func contains(slice []int, val int) bool {
 	for _, item := range slice {
 		if item == val {
 			return true
@@ -21,12 +22,37 @@ func contains(slice []string, val string) bool {
 	return false
 }
 
-func correctNumbers(correct, guess string) int {
+func removeDuplicatesString(s []string) []string {
+	m := make(map[string]bool)
+	for _, v := range s {
+		m[v] = true
+	}
+	var result []string
+	for k := range m {
+		result = append(result, k)
+	}
+	return result
+}
+
+func makeIntList(list []string) []int {
+	var int_list []int
+	for _, str := range list {
+		val, err := strconv.Atoi(string(str))
+		if err == nil {
+			int_list = append(int_list, val)
+		}
+	}
+	return int_list
+}
+
+func correctNumbers(winner, guess string) int {
 	guesses := strings.Split(strings.TrimSpace(guess), " ")
-	corrects := strings.Split(strings.TrimSpace(correct), " ")
+	winners := strings.Split(strings.TrimSpace(winner), " ")
+	winners_int := makeIntList(winners)
+	guesses_int := makeIntList(guesses)
 	count := 0
-	for _, g := range guesses {
-		if contains(corrects, g) {
+	for _, g := range winners_int {
+		if contains(guesses_int, g) {
 			count += 1
 		}
 	}
@@ -40,8 +66,10 @@ func correctNumbers(correct, guess string) int {
 	return 0
 }
 
+// 59722 too high
+// 41937 too high
 func main() {
-	dat, err := os.ReadFile("./inputs/day4/example.txt")
+	dat, err := os.ReadFile("./inputs/day4/input.txt")
 	check(err)
 	temp := strings.Split(string(dat), "\n")
 
