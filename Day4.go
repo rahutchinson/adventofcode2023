@@ -21,7 +21,7 @@ func contains(slice []string, val string) bool {
 	return false
 }
 
-func correctNumbers(guess, correct string) int {
+func correctNumbers(correct, guess string) int {
 	guesses := strings.Split(strings.TrimSpace(guess), " ")
 	corrects := strings.Split(strings.TrimSpace(correct), " ")
 	count := 0
@@ -41,7 +41,7 @@ func correctNumbers(guess, correct string) int {
 }
 
 func main() {
-	dat, err := os.ReadFile("./inputs/day4/input.txt")
+	dat, err := os.ReadFile("./inputs/day4/example.txt")
 	check(err)
 	temp := strings.Split(string(dat), "\n")
 
