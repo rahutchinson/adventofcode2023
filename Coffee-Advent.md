@@ -14,17 +14,26 @@ This document is for reviewing coffees from my [Onyx Coffee Advent calendar](htt
 ---
 
 ### Day 2: Kenya Gichathaini AA
-- **Taste:** Much more juice than yesterday - very tasy. One of the best washed I have had. 
-- **Aroma:** forgot to smell
-- **Rating (1-5):** 4
-- **Notes:** Hario switch brew 25g to 400g - I think I ground to coarse
-
----
-
-### Day 3: Ethiopia Hambela Bishan Fugu
 - **Taste:** Certainly sweet - green grape acidity is interesting 
 - **Aroma:** botanical
 - **Rating (1-5):** 2
+- **Notes:** Hario switch brew 25g to 400g - I think I ground to coarse
+
+---``
+
+### Day 3: Ethiopia Hambela Bishan Fugu
+- **Taste:** 
+Much more juice than yesterday - very tasy. One of the best washed I have had. 
+- **Aroma:** forgot to smell
+- **Rating (1-5):** 4
 - **Notes:** Hario switch brew 25g to 400g - grind was bettery today
+
+---
+
+### Day 4: Colombia Aponte Village
+- **Taste:** great mouth feel - silky for sure. didn'tget the 
+- **Aroma:** botanical
+- **Rating (1-5):** 3
+- **Notes:** V60 switch brew 34g to 540  - 100g bloom 40 seconds (first batch was too fine on the switch)
 
 ---
