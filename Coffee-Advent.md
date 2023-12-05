@@ -37,3 +37,11 @@ Much more juice than yesterday - very tasy. One of the best washed I have had.
 - **Notes:** V60 switch brew 34g to 540  - 100g bloom 40 seconds (first batch was too fine on the switch)
 
 ---
+
+### Day 5: Mexico Puebla Zapotitlan #2
+- **Taste:** First brew was bad but the second was not too bad. Don't get much of the spice but sweet and fruit acid comes through
+- **Aroma:** sweet
+- **Rating (1-5):** 2
+- **Notes:** V60 switch brew 24g to 380g  - 100g bloom 40 seconds (first batch was too fine)
+
+---
