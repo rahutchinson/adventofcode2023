@@ -52,13 +52,12 @@ func main() {
 	temp := strings.Split(string(dat), "\n")
 
 	running_total := 1
-	time_int := makeIntList(strings.Split(strings.Split(temp[0], ":")[1], " "))
-	distance_int := makeIntList(strings.Split(strings.Split(temp[1], ":")[1], " "))
-	for race, value := range time_int {
-		total_to_beat := calculateMaxToBeat(value, distance_int[race]) - calculateMinToBeat(value, distance_int[race])
-		fmt.Println(total_to_beat)
-		running_total *= total_to_beat
+	time_int, err := strconv.Atoi(strings.ReplaceAll(strings.Split(temp[0], ":")[1], " ", ""))
+	distance_int, err := strconv.Atoi(strings.ReplaceAll(strings.Split(temp[1], ":")[1], " ", ""))
 
-	}
+	total_to_beat := calculateMaxToBeat(time_int, distance_int) - calculateMinToBeat(time_int, distance_int)
+	fmt.Println(total_to_beat)
+	running_total *= total_to_beat
+
 	fmt.Println(running_total)
 }

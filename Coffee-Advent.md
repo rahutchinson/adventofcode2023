@@ -45,3 +45,11 @@ Much more juice than yesterday - very tasy. One of the best washed I have had.
 - **Notes:** V60 switch brew 24g to 380g  - 100g bloom 40 seconds (first batch was too fine)
 
 ---
+
+### Day 6: Costa Rica Las Lajas Black Honey
+- **Taste:** Best brew by far which made this really nice clean a sweet, certainly chocolate but not in a bad way - I normally don't like "dark chocolate" tasting notes but this is not bad.
+- **Aroma:** rich
+- **Rating (1-5):** 3
+- **Notes:** V60 switch brew 25g to 400g  - shorter. all drained in less than 4min with brew. 
+
+---
