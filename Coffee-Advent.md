@@ -53,3 +53,5 @@ Much more juice than yesterday - very tasy. One of the best washed I have had.
 - **Notes:** V60 switch brew 25g to 400g  - shorter. all drained in less than 4min with brew. 
 
 ---
+
+### Day 7 - I am going to drink day 7 and day 8 together tomororow. 
