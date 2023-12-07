@@ -22,7 +22,7 @@ const (
 	ThreeOfAKindBase = 10000
 	TwoPairBase      = 1000
 	OnePairBase      = 100
-	NoPair			 = 10
+	NoPair           = 10
 )
 
 func sortString(s string) string {
@@ -46,7 +46,7 @@ func cardValue(card rune) int {
 	case 'T':
 		return 10
 	case 'J':
-		return 11
+		return 0
 	case 'Q':
 		return 12
 	case 'K':
@@ -56,6 +56,25 @@ func cardValue(card rune) int {
 	default:
 		return 0
 	}
+}
+
+func removeJoker(slice []int) []int {
+	for i, v := range slice {
+		if v == 0 {
+			// Remove the element at index i
+			return append(slice[:i], slice[i+1:]...)
+		}
+	}
+	return slice // return the original slice if val is not found
+}
+
+func contains(slice []int, val int) bool {
+	for _, item := range slice {
+		if item == val {
+			return true
+		}
+	}
+	return false
 }
 
 // evaluateHand returns a numerical value representing the strength of the hand.
@@ -83,50 +102,90 @@ func evaluateHand(hand string) int {
 	case len(frequencies) == 1:
 		return FiveOfAKindBase
 	case len(frequencies) == 2:
-		if frequencies[values[0]] == 1 && frequencies[values[1]] == 4 {
-			return FourOfAKindBase
-		}
-		if frequencies[values[1]] == 1 && frequencies[values[0]] == 4 {
-			return FourOfAKindBase
-		}
-		if frequencies[values[0]] == 2 && frequencies[values[1]] == 3 {
-			return FullHouseBase
-		}
-		if frequencies[values[1]] == 2 && frequencies[values[0]] == 3 {
-			return FullHouseBase
+		// we have a joker
+		if contains(values, 0) {
+			if frequencies[values[0]] == 1 && frequencies[values[1]] == 4 {
+				return FiveOfAKindBase
+			}
+			if frequencies[values[1]] == 1 && frequencies[values[0]] == 4 {
+				return FiveOfAKindBase
+			}
+			if frequencies[values[0]] == 2 && frequencies[values[1]] == 3 {
+				return FiveOfAKindBase
+			}
+			if frequencies[values[1]] == 2 && frequencies[values[0]] == 3 {
+				return FiveOfAKindBase
+			}
+		} else {
+			if frequencies[values[0]] == 1 && frequencies[values[1]] == 4 {
+				return FourOfAKindBase
+			}
+			if frequencies[values[1]] == 1 && frequencies[values[0]] == 4 {
+				return FourOfAKindBase
+			}
+			if frequencies[values[0]] == 2 && frequencies[values[1]] == 3 {
+				return FullHouseBase
+			}
+			if frequencies[values[1]] == 2 && frequencies[values[0]] == 3 {
+				return FullHouseBase
+			}
 		}
 		return 0
 	case len(frequencies) == 3:
 		// 0is1, 1is2, 2 is 2
-		if frequencies[values[0]] == 1 && frequencies[values[1]] == 2 {
-			if values[1] > values[2] {
-				return TwoPairBase
-			} else {
-				return TwoPairBase
+		if contains(values, 0) {
+			if frequencies[0] == 1 {
+				values = removeJoker(values)
+				if frequencies[values[0]] == 3 || frequencies[values[1]] == 3 {
+					return FourOfAKindBase
+				} else {
+					return FullHouseBase
+				}
 			}
-		}
-		// 0 is 2, 1is1, 2is2
-		if frequencies[values[1]] == 1 && frequencies[values[2]] == 2 {
-			if values[0] > values[2] {
-				return TwoPairBase
-			} else {
-				return TwoPairBase
+			if frequencies[0] == 3 {
+				return FourOfAKindBase
 			}
-		}
-		// 0 is 2, 1is2, 2is1
-		if frequencies[values[2]] == 1 && frequencies[values[0]] == 2 {
-			if values[0] > values[1] {
-				return TwoPairBase
-			} else {
-				return TwoPairBase
+			if frequencies[0] == 2 {
+				return FourOfAKindBase
 			}
-		}
+		} else {
+			if frequencies[values[0]] == 1 && frequencies[values[1]] == 2 {
+				if values[1] > values[2] {
+					return TwoPairBase
+				} else {
+					return TwoPairBase
+				}
+			}
+			// 0 is 2, 1is1, 2is2
+			if frequencies[values[1]] == 1 && frequencies[values[2]] == 2 {
+				if values[0] > values[2] {
+					return TwoPairBase
+				} else {
+					return TwoPairBase
+				}
+			}
+			// 0 is 2, 1is2, 2is1
+			if frequencies[values[2]] == 1 && frequencies[values[0]] == 2 {
+				if values[0] > values[1] {
+					return TwoPairBase
+				} else {
+					return TwoPairBase
+				}
+			}
 
-		//not a two pair
-		return ThreeOfAKindBase
+			//not a two pair
+			return ThreeOfAKindBase
+		}
+		return 0
 	case len(frequencies) == 4:
+		if contains(values, 0) {
+			return ThreeOfAKindBase
+		}
 		return OnePairBase
 	default:
+		if contains(values, 0) {
+			return OnePairBase
+		}
 		// High card: use the highest value card
 		return NoPair
 	}
@@ -182,6 +241,7 @@ func main() {
 
 	fmt.Println(cardValue('7'))
 }
+
 //.        253933213
 //.        253640380
 //.        253969937 -- not right
