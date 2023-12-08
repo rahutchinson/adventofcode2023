@@ -18,15 +18,6 @@ type KeyPair struct {
 	r string
 }
 
-func checkZs(zss []string) bool {
-	for _, val := range zss {
-		if val[2] != 'Z' {
-			return false
-		}
-	}
-	return true
-}
-
 func main() {
 	dat, err := os.ReadFile("./inputs/day8/input.txt")
 	check(err)
@@ -43,40 +34,54 @@ func main() {
 		mapping[line_clean[0]] = KeyPair{l: dirs[0], r: dirs[1]}
 	}
 
-	var allA []string
-	for key, _ := range mapping {
+	allA := make([]string, 0)
+	for key := range mapping {
 		if key[2] == 'A' {
 			allA = append(allA, key)
 		}
 	}
-	fmt.Println(allA)
 
 	startTime := time.Now()
 	steps := 0
-	i := 0
-	stepsMap := make(map[string]int)
-	for _, val := range allA {
-		allA_1 := []string{val}
-		for !checkZs(allA_1) {
-			allZs := make([]string, 0, 6)
-			for _, a := range allA_1 {
-				if pattern[i] == 'L' {
-					allZs = append(allZs, mapping[a].l)
-				} else {
-					allZs = append(allZs, mapping[a].r)
-				}
-			}
-			allA_1 = allZs
-			steps++
-			i = (i + 1) % 263
+	patternLength := len(pattern)
+	history := make(map[string]map[string]bool)
 
-		}
-		fmt.Println(steps)
-		stepsMap[val] = steps
-		duration := time.Since(startTime)
-		fmt.Println("Execution time:", duration)
+	for _, a := range allA {
+		history[a] = make(map[string]bool)
 	}
-	fmt.Println(stepsMap)
+
+	loopDetected := false
+	for !loopDetected {
+		allZs := make([]string, len(allA))
+		for index, a := range allA {
+			next := mapping[a].l
+			if pattern[steps%patternLength] == 'R' {
+				next = mapping[a].r
+			}
+
+			if history[a] == nil {
+				history[a] = make(map[string]bool)
+			}
+
+			if history[a][next] {
+				fmt.Println("Loop detected for:", a)
+				loopDetected = true
+				break
+			}
+
+			history[a][next] = true
+			allZs[index] = next
+		}
+
+		if loopDetected {
+			break
+		}
+
+		allA = allZs
+		steps++
+	}
+
 	duration := time.Since(startTime)
+	fmt.Println("Steps:", steps)
 	fmt.Println("Execution time:", duration)
 }
