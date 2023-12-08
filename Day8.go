@@ -27,6 +27,25 @@ func checkZs(zss []string) bool {
 	return true
 }
 
+func gcd(a, b int) int {
+	for b != 0 {
+		a, b = b, a%b
+	}
+	return a
+}
+
+func lcm(a, b int) int {
+	return a * b / gcd(a, b)
+}
+
+func lcmOfArray(arr []int) int {
+	result := arr[0]
+	for _, num := range arr[1:] {
+		result = lcm(result, num)
+	}
+	return result
+}
+
 func main() {
 	dat, err := os.ReadFile("./inputs/day8/input.txt")
 	check(err)
@@ -57,6 +76,8 @@ func main() {
 	stepsMap := make(map[string]int)
 	for _, val := range allA {
 		allA_1 := []string{val}
+		i = 0
+		steps = 0
 		for !checkZs(allA_1) {
 			allZs := make([]string, 0, 6)
 			for _, a := range allA_1 {
@@ -77,6 +98,13 @@ func main() {
 		fmt.Println("Execution time:", duration)
 	}
 	fmt.Println(stepsMap)
+
+	var stepCounts []int
+	for _, v := range stepsMap {
+		stepCounts = append(stepCounts, v)
+	}
+
+	fmt.Println("The LCM of the step counts is:", lcmOfArray(stepCounts))
 	duration := time.Since(startTime)
 	fmt.Println("Execution time:", duration)
 }
