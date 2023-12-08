@@ -54,4 +54,10 @@ Much more juice than yesterday - very tasy. One of the best washed I have had.
 
 ---
 
-### Day 7 - I am going to drink day 7 and day 8 together tomororow. 
+### Day 7: Burundi Long Miles Gaharo Hill
+- **Taste:** suprrisingly I do get some grapefruit but again a great cup of coffee
+- **Aroma:** sweet
+- **Rating (1-5):** 3
+- **Notes:** V60 switch brew 25g to 400g  - shorter. did a bloom with the switch open - then filled with the rest of the water for 2min then drain
+
+---
