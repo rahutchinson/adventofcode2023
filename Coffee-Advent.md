@@ -5,6 +5,14 @@ This document is for reviewing coffees from my [Onyx Coffee Advent calendar](htt
 
 ---
 
+### Day X: 
+- **Taste:** 
+- **Aroma:** 
+- **Rating (1-5):** 
+- **Notes:** 
+
+---
+
 ### Day 1: Framily
 - **Taste:** Tasty - fairly clean (it is washed). Great daily coffee 
 - **Aroma:** Lovley 
@@ -61,3 +69,17 @@ Much more juice than yesterday - very tasy. One of the best washed I have had.
 - **Notes:** V60 switch brew 25g to 400g  - shorter. did a bloom with the switch open - then filled with the rest of the water for 2min then drain
 
 ---
+
+### Day 8: 
+- **Taste:** 
+- **Aroma:** 
+- **Rating (1-5):** 
+- **Notes:** 
+
+---
+
+### Day 9: El Salvador Santa Rosa Honey
+- **Taste:** yummy! another good honeyed coffee
+- **Aroma:** cotton candy!
+- **Rating (1-5):** 3
+- **Notes:** course grind with longer switch brew (~4min) at 25 to 400g
