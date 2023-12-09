@@ -70,11 +70,11 @@ Much more juice than yesterday - very tasy. One of the best washed I have had.
 
 ---
 
-### Day 8: 
-- **Taste:** 
-- **Aroma:** 
-- **Rating (1-5):** 
-- **Notes:** 
+### Day 8: Guatemala Finca Travesia Natural
+- **Taste:** funky but not the normal funk I think I should have with a washed
+- **Aroma:** none
+- **Rating (1-5):** 2 
+- **Notes:** I normally like washed so I am going to have to come back to this. I think I went too fine
 
 ---
 
