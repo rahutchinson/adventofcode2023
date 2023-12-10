@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"os"
 	"strings"
 )
@@ -31,7 +32,7 @@ type Pair struct {
 	X int
 }
 
-func traversePipes(grid [][]rune, startX, startY int) {
+func traversePipes(grid [][]rune, startX, startY int, path *[][]int) {
 	x, y := startX, startY
 	direction := "east" // assuming the animal starts moving east
 	started := false    // flag to indicate if the traversal has started
@@ -42,6 +43,9 @@ func traversePipes(grid [][]rune, startX, startY int) {
 			fmt.Println("Exited the grid.")
 			break
 		}
+
+		// Append current position to path
+		*path = append(*path, []int{x, y})
 
 		switch grid[y][x] {
 		case '|':
@@ -120,91 +124,6 @@ func traversePipes(grid [][]rune, startX, startY int) {
 		fmt.Printf("Current position: (%d, %d), moving %s\n", x, y, direction)
 	}
 }
-func isInside(grid [][]rune, x, y int) bool {
-	return y >= 0 && y < len(grid) && x >= 0 && x < len(grid[y])
-}
-
-func floodFill(grid [][]rune, x, y int) int {
-	if !isInside(grid, x, y) || grid[y][x] != '.' {
-		return 0
-	}
-
-	// Mark the current cell as visited
-	grid[y][x] = 'x'
-
-	// Recursively call for all directions
-	count := 1
-	count += floodFill(grid, x+1, y)
-	count += floodFill(grid, x-1, y)
-	count += floodFill(grid, x, y+1)
-	count += floodFill(grid, x, y-1)
-
-	return count
-}
-
-func findStartInsideLoop(grid [][]rune, path [][]int) (int, int) {
-	// Simplified: Find a point next to the first point in the path.
-	// In a more complex loop, you would need to find a point that is guaranteed to be inside the loop.
-	for _, dir := range [][]int{{1, 0}, {0, 1}, {-1, 0}, {0, -1}} {
-		x := path[0][0] + dir[0]
-		y := path[0][1] + dir[1]
-		if isInside(grid, x, y) && grid[y][x] == '.' {
-			return x, y
-		}
-	}
-	return -1, -1
-}
-
-/*
-| is a vertical pipe connecting north and south.
-- is a horizontal pipe connecting east and west.
-L is a 90-degree bend connecting north and east.
-J is a 90-degree bend connecting north and west.
-7 is a 90-degree bend connecting south and west.
-F is a 90-degree bend connecting south and east.
-. is ground; there is no pipe in this tile.
-S is the starting position of the animal; there is a pipe on this tile, but your sketch doesn't show what shape the pipe has.
-*/
-func traversePipe(loc, last Pair, ar []string, maps map[Pair]string) int {
-	if ar[loc.Y][loc.X] == 'S' {
-		fmt.Println(maps)
-		return 1
-	}
-	fmt.Println(maps)
-	fmt.Println(string(ar[loc.Y][loc.X]))
-	val := string(ar[loc.Y][loc.X])
-	switch {
-	//going up
-	case loc.Y < len(ar[loc.Y])-1 && ar[loc.Y-1][loc.X] == '|' && last.Y != loc.Y-1:
-		maps[Pair{loc.Y - 1, loc.X}] = "|"
-		return traversePipe(Pair{loc.Y - 1, loc.X}, loc, ar, maps) + 1
-	case loc.Y != len(ar[loc.Y])-1 && ar[loc.Y-1][loc.X] == 'L' && last.Y != loc.Y-1:
-		maps[Pair{loc.Y - 1, loc.X}] = "L"
-		return traversePipe(Pair{loc.Y - 1, loc.X}, loc, ar, maps) + 1
-	case loc.Y != len(ar[loc.Y])-1 && ar[loc.Y-1][loc.X] == 'J' && last.Y != loc.Y-1:
-		maps[Pair{loc.Y - 1, loc.X}] = "J"
-		return traversePipe(Pair{loc.Y - 1, loc.X}, loc, ar, maps) + 1
-	//going down
-	case val != "J" && loc.Y != len(ar[loc.Y])+2 && ar[loc.Y+1][loc.X] == '|' && last.Y != loc.Y+1:
-		maps[Pair{loc.Y + 1, loc.X}] = "|"
-		return traversePipe(Pair{loc.Y + 1, loc.X}, loc, ar, maps) + 1
-	case val != "J" && loc.Y != len(ar[loc.Y])+1 && ar[loc.Y+1][loc.X] == '7' && last.Y != loc.Y+1:
-		maps[Pair{loc.Y + 1, loc.X}] = "7"
-		return traversePipe(Pair{loc.Y + 1, loc.X}, loc, ar, maps) + 1
-	case val != "J" && loc.Y != len(ar[loc.Y])+1 && ar[loc.Y+1][loc.X] == 'F' && last.Y != loc.Y+1:
-		maps[Pair{loc.Y + 1, loc.X}] = "F"
-		return traversePipe(Pair{loc.Y + 1, loc.X}, loc, ar, maps) + 1
-		// going right
-	case loc.X < len(ar[loc.Y])-1 && ar[loc.Y][loc.X+1] == '-' && last.X != loc.X+1:
-		maps[Pair{loc.Y, loc.X + 1}] = "-"
-		return traversePipe(Pair{loc.Y, loc.X + 1}, loc, ar, maps) + 1
-		//going left
-	case loc.X > 0 && ar[loc.Y][loc.X-1] == '-' && last.X != loc.X-1:
-		maps[Pair{loc.Y, loc.X - 1}] = "-"
-		return traversePipe(Pair{loc.Y, loc.X - 1}, loc, ar, maps) + 1
-	}
-	return 0
-}
 
 func stringsToRunes(strings []string) [][]rune {
 	var runes [][]rune
@@ -212,6 +131,20 @@ func stringsToRunes(strings []string) [][]rune {
 		runes = append(runes, []rune(str))
 	}
 	return runes
+}
+
+func shoelace(vertices [][]int) float64 {
+	area := 0.0
+	n := len(vertices)
+
+	for i := 0; i < n-1; i++ {
+		area += float64(vertices[i][0]*vertices[i+1][1] - vertices[i+1][0]*vertices[i][1])
+	}
+
+	// Closing the polygon
+	area += float64(vertices[n-1][0]*vertices[0][1] - vertices[0][0]*vertices[n-1][1])
+
+	return math.Abs(area) / 2.0
 }
 
 func main() {
@@ -229,7 +162,24 @@ func main() {
 	}
 
 	// length := traversePipe(Pair{sLoc.Y, sLoc.X + 1}, sLoc, pipes, make(map[Pair]string))
-	traversePipes(stringsToRunes(pipes), sLoc.X, sLoc.Y)
-	fmt.Println(sLoc)
-	// fmt.Println(length)
+	path := make([][]int, 0)
+	pipes_r := stringsToRunes(pipes)
+	traversePipes(pipes_r, sLoc.X, sLoc.Y, &path)
+	// Prepare a visited grid
+	visited := make([][]bool, len(pipes_r))
+	for i := range visited {
+		visited[i] = make([]bool, len(pipes_r[i]))
+	}
+	// Find a reliable starting point for flood fill
+	// This is a placeholder; you'll need a robust method based on your grid and path
+	area := shoelace(path)
+	// area = numIneed + len(path)/2 -1
+	// area + 1 - len(path)/2 = numIneed 
+	paths := len(path)/2
+	fmt.Println(int(area) + 1 - int(paths))
+
 }
+
+// 19600 too high
+// 985 too high
+// 513 too high
