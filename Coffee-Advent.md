@@ -83,3 +83,11 @@ Much more juice than yesterday - very tasy. One of the best washed I have had.
 - **Aroma:** cotton candy!
 - **Rating (1-5):** 3
 - **Notes:** course grind with longer switch brew (~4min) at 25 to 400g
+
+---
+
+### Day 10: 
+- **Taste:** 
+- **Aroma:** 
+- **Rating (1-5):** 
+- **Notes:** 
