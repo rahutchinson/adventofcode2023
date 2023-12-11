@@ -91,3 +91,11 @@ Much more juice than yesterday - very tasy. One of the best washed I have had.
 - **Aroma:** 
 - **Rating (1-5):** 
 - **Notes:** 
+
+### Day 11: El Salvador Santa Rosa
+- **Taste:** don't get a lot of the tasting notes but is well balanced
+- **Aroma:** Na
+- **Rating (1-5):** 3
+- **Notes:** brewed 35g to 560g of water in the `gold` on the coffee maker
+
+---
