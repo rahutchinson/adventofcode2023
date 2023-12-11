@@ -40,24 +40,20 @@ func expand(uni []string) []string {
 		}
 	}
 	newTable := uni
-	val_to_expand := 10
 	for val, row := range empty_rows {
-		// new row to add
-		newRow := strings.Repeat(".", len(newTable[0]))
-		newTableRow := make([]string, len(newTable)+val_to_expand)
+		newRow := strings.Repeat(".", len(uni[0]))
+		newTableRow := make([]string, len(newTable)+1)
 
 		copy(newTableRow, newTable[:row+val])
-		for i := 1; i < val_to_expand; i++ {
-			newTableRow[row+val+i] = newRow
-		}
-		copy(newTableRow[row+val+val_to_expand:], newTable[row+val:])
+		newTableRow[row+val] = newRow
+		copy(newTableRow[row+val+1:], newTable[row+val:])
 
 		newTable = newTableRow
 	}
 	for val, row := range newTable {
 		newRow := row
 		for num, col := range empty_cols {
-			newRow = newRow[:col+num] + strings.Repeat(".", val_to_expand) + newRow[col+num:]
+			newRow = newRow[:col+num] + "." + newRow[col+num:]
 		}
 		newTable[val] = newRow
 	}
@@ -100,7 +96,7 @@ func distance2D(a, b Pair) int {
 // find the distance between each galaxy
 
 func main() {
-	dat, err := os.ReadFile("./inputs/day11/example.txt")
+	dat, err := os.ReadFile("./inputs/day11/input.txt")
 	check(err)
 	temp := strings.Split(string(dat), "\n")
 
