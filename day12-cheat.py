@@ -35,3 +35,6 @@ print("Part 1 total:", sum(numlegal(s,c) for [s,c] in ss))
 
 ss2 = [[(s[0]+'?')*4 + s[0],s[1]*5] for s in ss]
 print("Part 2 total:", sum(numlegal(s,c) for [s,c] in ss2))
+
+# thanks ai_prof
+# found here https://www.reddit.com/r/adventofcode/comments/18ge41g/comment/kd0oj1t/?utm_source=share&utm_medium=web2x&context=3
