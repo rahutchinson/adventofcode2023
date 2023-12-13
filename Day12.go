@@ -39,7 +39,7 @@ func isValid(line string, arrange []int) bool {
 		if index != -1 {
 			count++
 			currentIndex = index + len(tofind) - 1
-			// fmt.Printf("%s in %s at %d\n", tofind, line, index)
+			fmt.Printf("%s in %s at %d\n", tofind, line, index)
 		} else {
 			return false
 		}
@@ -47,7 +47,7 @@ func isValid(line string, arrange []int) bool {
 	return true
 }
 
-func generateCombinations(line string) []string {
+func generateCombinations(line string, add bool, max int) []string {
 	seen := make(map[string]bool)
 
 	var backtrack func(combination string, index int)
@@ -72,18 +72,33 @@ func generateCombinations(line string) []string {
 	var keys []string
 
 	// Iterate over the map and collect the keys
-	for key := range seen {
-		
-		keys = append(keys, key)
+	if add {
+		for key := range seen {
+			keys = append(keys, strings.Repeat(key+"?", 5))
+		}
+	} else {
+		for key := range seen {
+			keys = append(keys, key)
+		}
 	}
 	return keys
+}
+
+func newArr(l []int) []int {
+	repeatedArray := []int{}
+
+	// Repeat the input array 5 times in order
+	for i := 0; i < 5; i++ {
+		repeatedArray = append(repeatedArray, l...)
+	}
+	return repeatedArray
 }
 
 func main() {
 	// fmt.Println(isValid("...#.######..#####.", []int{1, 6, 5}))
 	// return
 
-	dat, err := os.ReadFile("./inputs/day12/input.txt")
+	dat, err := os.ReadFile("./inputs/day12/example.txt")
 	check(err)
 	temp := strings.Split(string(dat), "\n")
 	running := 0
@@ -97,13 +112,21 @@ func main() {
 		}
 		l := splits[0]
 		vArs := 0
-		plines := generateCombinations(l)
+		plines := generateCombinations(l, true, sumList(vsi))
+		fmt.Println(len(plines))
+		vsi2 := newArr(vsi)
+		// fmt.Println(vsi2)
 		for _, pline := range plines {
-			// fmt.Printf("line: %s %t\n", pline, isValid(pline, vsi))
-			if isValid(pline, vsi) {
-				// fmt.Printf("line: %s %t\n", pline, isValid(pline, vsi))
-				vArs++
+			plines2 := generateCombinations(pline, false, sumList(vsi2))
+			fmt.Println(len(plines2))
+			for _, p := range plines2 {
+				// fmt.Printf("line: %s %t\n", p, isValid(p, vsi2))
+				if isValid(p, vsi2) {
+					// fmt.Printf("line: %s %t\n", pline, isValid(pline, vsi))
+					vArs++
+				}
 			}
+
 		}
 		running += vArs
 		fmt.Println(vArs)
